@@ -4,10 +4,11 @@ import webbrowser
 import os.path
 from urllib import response
 
-serverPort = 9000
-serverSocket = socket(AF_INET, SOCK_STREAM)
-serverSocket.bind(('', serverPort))
-serverSocket.listen(1)
+
+serverPort = 9000   #define the server port
+serverSocket = socket(AF_INET, SOCK_STREAM) #make a server socket with those settings
+serverSocket.bind(('', serverPort))         #'' mean default local host 127.0.0.1 and listen on the port Server Port
+serverSocket.listen(1)                      #listen for one device
 
 print('The server is ready to receive')
 
@@ -28,12 +29,12 @@ def sendError(connection):
     connection.close()
 
 while True:
-    connection, address = serverSocket.accept()
-    sentence = connection.recv(1024).decode('utf-8')
+    connection, address = serverSocket.accept()     #any user have the ip and address accept their request
+    sentence = connection.recv(1024).decode('utf-8') #recieve the url address with length 1024 byte and decode it by UTF-8 Method
     ip = address[0]
     port = address[1]
     requestedFile = sentence.split(' ')[1]
-    request = requestedFile.lstrip('/')
+    request = requestedFile.lstrip('/')  #split the URL to remain the last request
     print('IP: ' + str(ip) + ', Port: ' + str(port))
     print(sentence)
 
